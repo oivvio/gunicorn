@@ -125,7 +125,7 @@ class SyncWorker(base.Worker):
                 self.alive = False
             respiter = self.wsgi(environ, resp.start_response)
             try:
-                if isinstance(respiter, environ['wsgi.file_wrapper']):
+                if environ.has_key('wsgi.file_wrapper') and isinstance(respiter, environ['wsgi.file_wrapper']):
                     resp.write_file(respiter)
                 else:
                     for item in respiter:
